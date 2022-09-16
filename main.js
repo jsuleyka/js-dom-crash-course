@@ -24,7 +24,7 @@ function addItem(e) {
     li.className = 'list-group-item';
 
     // Add text node with input value
-    if (newItem.length >= 3){
+    if (newItem.trim().length >= 3){
         li.appendChild(document.createTextNode(newItem));
 
         // Create del button element
@@ -45,13 +45,13 @@ function addItem(e) {
 
         // Show element by increasing opacity
         unfade(li);
-
-        //Clear input
-        itemInput.value = "";
     }
     else {
         alert("Please add an item valid");
     }
+
+    //Clear input
+    itemInput.value = "";
 }
 
 function unfade(element) {
