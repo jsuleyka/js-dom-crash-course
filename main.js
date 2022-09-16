@@ -1,6 +1,6 @@
-var form = document.getElementById('addForm');
-var itemList = document.getElementById('items');
-var filter = document.getElementById('filter');
+let form = document.getElementById('addForm');
+let itemList = document.getElementById('items');
+let filter = document.getElementById('filter');
 
 // Form submit event
 form.addEventListener('submit', addItem);
@@ -14,17 +14,17 @@ function addItem(e) {
     e.preventDefault();
 
     // Get input value
-    var newItem = document.getElementById('item').value;
+    let newItem = document.getElementById('item').value;
 
     // Create new li element
-    var li = document.createElement('li');
+    let li = document.createElement('li');
     // Add class
     li.className = 'list-group-item';
     // Add text node with input value
     li.appendChild(document.createTextNode(newItem));
 
     // Create del button element
-    var deleteBtn = document.createElement('button');
+    let deleteBtn = document.createElement('button');
 
     // Add classes to del button
     deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
@@ -37,13 +37,29 @@ function addItem(e) {
 
     // Append li to list
     itemList.appendChild(li);
+    li.style.opacity = 0;
+
+    // Show button by increasing opacity
+    unfade(li);
+    function unfade(element) {
+        let op = 0.1;  // initial opacity
+        element.style.display = 'block';
+        let timer = setInterval(function () {
+            if (op >= 1){
+                clearInterval(timer);
+            }
+            element.style.opacity = op;
+            element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+            op += op * 0.1;
+        }, 10);
+    }
 }
 
 // Remove item
 function removeItem(e) {
     if (e.target.classList.contains('delete')) {
         if (confirm('Are You Sure?')) {
-            var li = e.target.parentElement;
+            let li = e.target.parentElement;
             itemList.removeChild(li);
         }
     }
@@ -52,12 +68,12 @@ function removeItem(e) {
 // Filter Items
 function filterItems(e) {
     // convert text to lowercase
-    var text = e.target.value.toLowerCase();
+    let text = e.target.value.toLowerCase();
     // Get lis
-    var items = itemList.getElementsByTagName('li');
+    let items = itemList.getElementsByTagName('li');
     // Convert to an array
     Array.from(items).forEach(function (item) {
-        var itemName = item.firstChild.textContent;
+        let itemName = item.firstChild.textContent;
         if (itemName.toLowerCase().indexOf(text) != -1) {
             item.style.display = 'block';
         } else {
